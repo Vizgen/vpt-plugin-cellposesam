@@ -16,5 +16,5 @@ class CellposeSegParameters:
     entity_fill_channel: str
     diameter: int
     flow_threshold: float
-    mask_threshold: float
+    cellprob_threshold: float
     minimum_mask_size: int

@@ -5,7 +5,7 @@ import numpy as np
 from . import utils
 from scipy.optimize import linear_sum_assignment
 from scipy.ndimage import convolve
-from scipy.sparse import csr_matrix 
+from scipy.sparse import csr_matrix
 
 
 def mask_ious(masks_true, masks_pred):
@@ -56,9 +56,10 @@ def boundary_scores(masks_true, masks_pred, scales):
 
 
 def _label_overlap(masks_true, masks_pred):
-    return csr_matrix((np.ones((masks_true.size,), "int"),
-                       (masks_true.flatten(), masks_pred.flatten())),
-                      shape=(masks_true.max() + 1, masks_pred.max() + 1))
+    return csr_matrix(
+        (np.ones((masks_true.size,), "int"), (masks_true.flatten(), masks_pred.flatten())),
+        shape=(masks_true.max() + 1, masks_pred.max() + 1),
+    )
 
 
 def aggregated_jaccard_index(masks_true, masks_pred):
@@ -117,8 +118,7 @@ def average_precision(masks_true, masks_pred, threshold=[0.5, 0.75, 0.9]):
         threshold = [threshold]
 
     if len(masks_true) != len(masks_pred):
-        raise ValueError(
-            "metrics.average_precision requires len(masks_true)==len(masks_pred)")
+        raise ValueError("metrics.average_precision requires len(masks_true)==len(masks_pred)")
 
     ap = np.zeros((len(masks_true), len(threshold)), np.float32)
     tp = np.zeros((len(masks_true), len(threshold)), np.float32)
@@ -128,7 +128,7 @@ def average_precision(masks_true, masks_pred, threshold=[0.5, 0.75, 0.9]):
     n_pred = np.array([len(np.unique(mp)) - 1 for mp in masks_pred])
 
     for n in range(len(masks_true)):
-        #_,mt = np.reshape(np.unique(masks_true[n], return_index=True), masks_pred[n].shape)
+        # _,mt = np.reshape(np.unique(masks_true[n], return_index=True), masks_pred[n].shape)
         if n_pred[n] > 0:
             iou = _intersection_over_union(masks_true[n], masks_pred[n])[1:, 1:]
             for k, th in enumerate(threshold):
@@ -195,11 +195,11 @@ def _true_positive(iou, th):
             gets more negative with higher IoU, but less negative with greater
             n_min (but that's a constant...).
         (3) Solve the linear sum assignment problem. The costs array defines the cost
-            of matching a true label with a predicted label, so the problem is to 
+            of matching a true label with a predicted label, so the problem is to
             find the set of pairings that minimizes this cost. The scipy.optimize
-            function gives the ordered lists of corresponding true and predicted labels. 
+            function gives the ordered lists of corresponding true and predicted labels.
         (4) Extract the IoUs from these pairings and then threshold to get a boolean array
-            whose sum is the number of true positives that is returned. 
+            whose sum is the number of true positives that is returned.
     """
     n_min = min(iou.shape[0], iou.shape[1])
     costs = -(iou >= th).astype(float) - iou / (2 * n_min)

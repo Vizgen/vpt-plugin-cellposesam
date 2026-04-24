@@ -1,12 +1,8 @@
 {
-  "experiment_properties": {
-    "all_z_indexes": [0, 1, 2, 3, 4, 5, 6],
-    "z_positions_um": [1.5, 3, 4.5, 6, 7.5, 9, 10.5]
-  },
   "segmentation_tasks": [
     {
       "task_id": 0,
-      "segmentation_family": "Cellpose",
+      "segmentation_family": "CellposeSAM",
       "entity_types_detected": [
         "cell"
       ],
@@ -20,14 +16,14 @@
         6
       ],
       "segmentation_properties": {
-        "model": "cyto2",
+        "model": "cellpose-sam",
         "model_dimensions": "2D",
         "custom_weights": null,
         "version": "latest"
       },
       "task_input_data": [
         {
-          "image_channel": "PolyT",
+          "image_channel": "Cellbound1",
           "image_preprocessing": [
             {
               "name": "normalize",
@@ -71,26 +67,6 @@
         "simplification_tol": 2,
         "smoothing_radius": 10,
         "minimum_final_area": 500
-      }
-    }
-  ],
-  "segmentation_task_fusion": {
-    "entity_fusion_strategy": "harmonize",
-    "fused_polygon_postprocessing_parameters": {
-      "min_distance_between_entities": 1,
-      "min_final_area": 500
-    }
-  },
-  "output_files": [
-    {
-      "entity_types_output": [
-        "cell"
-      ],
-      "files": {
-        "run_on_tile_dir": "result_tiles/",
-        "mosaic_geometry_file": "cellpose_mosaic_space.parquet",
-        "micron_geometry_file": "cellpose_micron_space.parquet",
-        "cell_metadata_file": "cellpose_cell_metadata.csv"
       }
     }
   ]
