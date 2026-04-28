@@ -5,8 +5,8 @@ import cv2
 import numpy as np
 
 from vpt_core.io.image import ImageSet
-from vpt_plugin_cellpose import CellposeSegProperties, CellposeSegParameters
-from vpt_plugin_cellpose.predict import run
+from vpt_plugin_cellposesam import CellposeSegProperties, CellposeSegParameters
+from vpt_plugin_cellposesam.predict import run
 
 
 @dataclass(frozen=True)
@@ -14,6 +14,9 @@ class Circle:
     x: int
     y: int
     radius: int
+
+
+MODEL_DIMENSIONS = "2D"
 
 
 def generate_images(image_size: int, cells: List[Circle]) -> Tuple[ImageSet, str, str]:
@@ -25,15 +28,19 @@ def generate_images(image_size: int, cells: List[Circle]) -> Tuple[ImageSet, str
 
     nuclear_channel, fill_channel = "DAPI", "PolyT"
     images = ImageSet()
-    images[nuclear_channel] = {i: dapi for i in range(3)}
-    images[fill_channel] = {i: polyt for i in range(3)}
+    if MODEL_DIMENSIONS == "3D":
+        images[nuclear_channel] = {i: dapi for i in range(3)}
+        images[fill_channel] = {i: polyt for i in range(3)}
+    else:
+        images[nuclear_channel] = {0: dapi}
+        images[fill_channel] = {0: polyt}
     return images, nuclear_channel, fill_channel
 
 
 def test_run_prediction() -> None:
     cells = [Circle(20, 15, 10), Circle(30, 100, 10), Circle(100, 20, 15), Circle(210, 100, 15)]
     images, nuc, fill = generate_images(256, cells)
-    properties = CellposeSegProperties("cyto2", "2D", "latest", None)
+    properties = CellposeSegProperties("cellpose-sam", MODEL_DIMENSIONS, "latest", None)
     parameters = CellposeSegParameters(nuc, fill, 30, 0.95, -5.5, 256)
     mask = run(images, properties, parameters)
     for i in images.z_levels():

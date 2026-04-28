@@ -3,9 +3,9 @@ from typing import Dict
 
 from vpt_core.segmentation.seg_result import SegmentationResult
 
-from tests.vpt_plugin_cellpose import TEST_DATA_ROOT
-from tests.vpt_plugin_cellpose.test_predict import Circle, generate_images
-from vpt_plugin_cellpose.segment import SegmentationMethod
+from tests.vpt_plugin_cellposesam import TEST_DATA_ROOT
+from tests.vpt_plugin_cellposesam.test_predict import Circle, generate_images, MODEL_DIMENSIONS
+from vpt_plugin_cellposesam.segment import SegmentationMethod
 
 
 def get_test_task(file_name: str) -> Dict:
@@ -32,12 +32,15 @@ def test_segment_run() -> None:
     method = SegmentationMethod()
     task = get_test_task("cellpose.json")
     cells = [Circle(20, 15, 10), Circle(30, 100, 10), Circle(100, 20, 15), Circle(210, 100, 15)]
+    segmentation_properties = task["segmentation_properties"]
+    segmentation_properties["model_dimensions"] = MODEL_DIMENSIONS
     seg_res = method.run_segmentation(
-        segmentation_properties=task["segmentation_properties"],
+        segmentation_properties=segmentation_properties,
         segmentation_parameters=task["segmentation_parameters"],
         polygon_parameters=task["polygon_parameters"],
         result=["cell"],
         images=generate_images(256, cells)[0],
     )
+
     for _, z_seg in seg_res.df.groupby(SegmentationResult.z_index_field):
         assert len(z_seg) == len(cells)

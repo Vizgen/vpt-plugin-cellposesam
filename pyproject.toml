@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "vpt_plugin_cellposSAM"
-version = "1.0.0"
-description = "Cellpose Plugin for VPT"
+name = "vpt_plugin_cellposeSAM"
+version = "0.0.11"
+description = "CellposeSAM Plugin for VPT"
 license = "Apache-2.0"
 authors = ["Vizgen <techsupport@vizgen.com>"]
 maintainers = ["Ruben Cardenes <ruben.cardenes@vizgen.com>"]
@@ -31,6 +31,12 @@ numpy = ">=1.24.3"
 pandas = ">=2.0.3"
 torch = ">=2.0.0, !=2.0.1, !=2.1.0"
 vpt_core = ">=1.1.0"
+fastremap = "^1.17.7"
+fill-voids = "^2.1.1"
+natsort = "^8.4.0"
+roifile = "2023.5.12"
+segment-anything = "^1.0"
+torchvision = "0.19.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.0"
@@ -45,6 +51,11 @@ python-semantic-release = "^7.32.2"
 [[tool.poetry.source]]
 name = "PyPI"
 priority = "primary"
+
+[[tool.poetry.source]]
+name = "jfrog"
+url = "https://vzartifactory.jfrog.io/artifactory/api/pypi/default-pypi/"
+priority = "explicit"
 
 [build-system]
 requires = ["poetry-core"]

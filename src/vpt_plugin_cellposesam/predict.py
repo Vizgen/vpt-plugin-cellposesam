@@ -22,10 +22,9 @@ def run(images: ImageSet, properties: CellposeSegProperties, parameters: Cellpos
         for channel_i in range(z_plane.shape[-1]):
             if z_plane[..., channel_i].std() < 0.1:
                 empty_z_levels.add(z_i)
-    if len(empty_z_levels) == image.shape[0]:575
+    if len(empty_z_levels) == image.shape[0]:
         return np.zeros((image.shape[0],) + image.shape[1:-1])
 
-    print("VPT cellposeSAM Plugin Using model", properties.model)
     if properties.custom_weights:
         model = models.CellposeModel(gpu=True, pretrained_model=properties.custom_weights)
     else:
@@ -33,12 +32,17 @@ def run(images: ImageSet, properties: CellposeSegProperties, parameters: Cellpos
     to_segment_z = list(set(range(image.shape[0])).difference(empty_z_levels))
 
     input_image = np.squeeze(image[to_segment_z, ...])
+
+    z_axis = 0 if properties.model_dimensions == "3D" else None
+    channel_axis = len(image.shape) - 1 if properties.model_dimensions == "3D" else None
+
     mask = model.eval(
         input_image,
-        z_axis=None,
-        channel_axis=None,
+        z_axis=z_axis,
+        channel_axis=channel_axis,
         diameter=parameters.diameter,
         flow_threshold=parameters.flow_threshold,
+        cellprob_threshold=parameters.cellprob_threshold,
         resample=False,
         min_size=parameters.minimum_mask_size,
         do_3D=(properties.model_dimensions == "3D"),
