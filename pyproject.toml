@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vpt_plugin_cellposeSAM"
-version = "0.0.0"
+version = "1.0.0"
 description = "CellposeSAM Plugin for VPT"
 license = "Apache-2.0"
 authors = ["Vizgen <techsupport@vizgen.com>"]

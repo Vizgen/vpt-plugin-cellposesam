@@ -2,6 +2,18 @@
 
 <!--next-version-placeholder-->
 
+## v1.0.0 (2026-04-28)
+
+### Feature
+
+* Updated initial release version ([`fc18e98`](https://github.com/Vizgen/vpt-plugin-cellposesam/commit/fc18e985f53d414df3b54cb8eed145a8ca9433ae))
+* Publish initial release of VPT-plugin-cellposesam ([`4a90ca2`](https://github.com/Vizgen/vpt-plugin-cellposesam/commit/4a90ca2e1862ad8855678a7ed2209ae0414fcc07))
+
+### Breaking
+
+* updated initial release version ([`fc18e98`](https://github.com/Vizgen/vpt-plugin-cellposesam/commit/fc18e985f53d414df3b54cb8eed145a8ca9433ae))
+* publish initial release of VPT-plugin-cellposesam ([`4a90ca2`](https://github.com/Vizgen/vpt-plugin-cellposesam/commit/4a90ca2e1862ad8855678a7ed2209ae0414fcc07))
+
 ## v0.0.11 (2026-04-23)
 
 ### Documentation
