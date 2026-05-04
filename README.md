@@ -113,7 +113,7 @@ Working specs are provided in
 | File | Dataset | Channels | Notes |
 |------|---------|----------|-------|
 | [`segmentation_specification.json`](example_analysis_algorithm/segmentation_specification.json) | Generic MERSCOPE | DAPI, PolyT, Cellbound3 | Default 2D template |
-| [`U2OS_segmentation_specification.json`](example_analysis_algorithm/U2OS_segmentation_specification.json) | [U2OS_small_set](https://vzg-web-resources.s3.amazonaws.com/202305010900_U2OS_small_set_VMSC00000.zip) | DAPI, PolyT, Cellbound1 | 3-channel, 7 z-levels |
+| [`U2OS_segmentation_specification.json`](example_analysis_algorithm/U2OS_segmentation_specification.json) | [U2OS_small_set](https://d21zg11mb7aqva.cloudfront.net/202305010900_U2OS_small_set_VMSC00000.zip) | DAPI, PolyT, Cellbound1 | 3-channel, 7 z-levels |
 
 ### Quick start
 
@@ -129,7 +129,7 @@ vpt --verbose run-segmentation \
 
 ### Example: U2OS small dataset
 
-The [U2OS_small_set](https://vzg-web-resources.s3.amazonaws.com/202305010900_U2OS_small_set_VMSC00000.zip)
+The [U2OS_small_set](https://d21zg11mb7aqva.cloudfront.net/202305010900_U2OS_small_set_VMSC00000.zip)
 is a public MERSCOPE dataset (3953 x 3960 px, 5 stains, 7 z-levels) suitable
 for end-to-end verification. The example spec selects three of the five stains
 (DAPI, PolyT, Cellbound1) and segments z-layer 3:
